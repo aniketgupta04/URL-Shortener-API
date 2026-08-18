@@ -1,9 +1,7 @@
 package com.aniket.url_shortener_api;
 import java.time.LocalDateTime;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
+import jakarta.persistence.*;
 
 
 @Entity
@@ -13,6 +11,7 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String longurl;
+    @Column(unique = true)
     private String shortcode;
     private LocalDateTime createdAt;
 
