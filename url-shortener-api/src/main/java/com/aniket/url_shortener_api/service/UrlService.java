@@ -1,5 +1,6 @@
 package com.aniket.url_shortener_api.service;
 
+import com.aniket.url_shortener_api.exception.UrlNotFoundException;
 import com.aniket.url_shortener_api.repository.UrlRepository;
 import com.aniket.url_shortener_api.Url;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,13 @@ public class UrlService {
         url.setShortCode(shortcode);
         return urlrepository.save(url);
     }
+
+    public Url getUrlByShortcode(String shortcode){
+        return urlrepository.findByShortcode(shortcode)
+                .orElseThrow(() -> new UrlNotFoundException(" Short code not found "));
+    }
+
+
     private String generateShortCode(){
         StringBuilder code = new StringBuilder();
 

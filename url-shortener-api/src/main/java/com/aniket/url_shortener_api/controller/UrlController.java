@@ -2,11 +2,13 @@ package com.aniket.url_shortener_api.controller;
 
 import com.aniket.url_shortener_api.Url;
 import com.aniket.url_shortener_api.dto.CreateUrlRequest;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.aniket.url_shortener_api.service.UrlService;
+import java.net.URI;
+
+
 @RestController
 @RequestMapping("api/urls")
 public class UrlController {
@@ -20,5 +22,16 @@ public class UrlController {
     @PostMapping
     public Url createurl(@RequestBody CreateUrlRequest request){
         return urlservice.createUrl(request.getLongUrl());
+    }
+
+    @GetMapping("/{shortcode}")
+    public ResponseEntity<Void> redirect(@PathVariable String shortcode){
+
+        Url url = urlservice.getUrlByShortcode(shortcode);
+
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .location(URI.create(url.getLongUrl()))
+                .build();
     }
 }
