@@ -24,12 +24,16 @@ public class UrlService {
         }while(urlrepository.existsByShortcode(shortcode));
 
         url.setShortCode(shortcode);
+        url.setClickCount(0);
         return urlrepository.save(url);
     }
 
     public Url getUrlByShortcode(String shortcode){
-        return urlrepository.findByShortcode(shortcode)
+        Url url = urlrepository.findByShortcode(shortcode)
                 .orElseThrow(() -> new UrlNotFoundException(" Short code not found "));
+
+        url.setClickCount(url.getClickCount() + 1);
+        return urlrepository.save(url);
     }
 
 

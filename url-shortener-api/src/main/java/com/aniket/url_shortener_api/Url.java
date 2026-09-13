@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 @Entity
 public class Url {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -14,6 +16,16 @@ public class Url {
     @Column(unique = true)
     private String shortcode;
     private LocalDateTime createdAt;
+
+    private int clickCount;
+
+    public int getClickCount(){
+        return clickCount;
+    }
+
+    public void setClickCount(int clickCount){
+        this.clickCount = clickCount;
+    }
 
     public void setLongUrl(String longurl){
         this.longurl=longurl;
