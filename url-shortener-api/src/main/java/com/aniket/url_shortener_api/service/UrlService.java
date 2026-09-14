@@ -5,6 +5,8 @@ import com.aniket.url_shortener_api.repository.UrlRepository;
 import com.aniket.url_shortener_api.Url;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class UrlService {
 
@@ -25,6 +27,7 @@ public class UrlService {
 
         url.setShortCode(shortcode);
         url.setClickCount(0);
+        url.setCreatedAt(LocalDateTime.now());
         return urlrepository.save(url);
     }
 
@@ -35,6 +38,13 @@ public class UrlService {
         url.setClickCount(url.getClickCount() + 1);
         return urlrepository.save(url);
     }
+
+    public Url getUrlStats(String shortcode){
+
+        return urlrepository.findByShortcode(shortcode)
+                .orElseThrow(() -> new UrlNotFoundException("Short code not found"));
+    }
+
 
 
     private String generateShortCode(){
@@ -47,4 +57,5 @@ public class UrlService {
         return code.toString();
         }
     }
+
 

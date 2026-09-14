@@ -34,4 +34,10 @@ public class UrlController {
                 .location(URI.create(url.getLongUrl()))
                 .build();
     }
+
+    @GetMapping("/{shortcode}/stats")
+    public ResponseEntity<Url> getUrlStats(@PathVariable String shortcode) {
+        Url url = urlservice.getUrlStats(shortcode);
+        return ResponseEntity.ok(url);
+    }
 }
