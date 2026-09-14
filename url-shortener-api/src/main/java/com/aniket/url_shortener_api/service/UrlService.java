@@ -4,6 +4,7 @@ import com.aniket.url_shortener_api.exception.UrlNotFoundException;
 import com.aniket.url_shortener_api.repository.UrlRepository;
 import com.aniket.url_shortener_api.Url;
 import org.springframework.stereotype.Service;
+import com.aniket.url_shortener_api.dto.UrlResponse;
 
 import java.time.LocalDateTime;
 
@@ -45,7 +46,14 @@ public class UrlService {
                 .orElseThrow(() -> new UrlNotFoundException("Short code not found"));
     }
 
-
+    public UrlResponse convertToResponse(Url url){
+        return new UrlResponse(
+                url.getShortCode(),
+                url.getLongUrl(),
+                url.getClickCount(),
+                url.getCreatedAt()
+        );
+    }
 
     private String generateShortCode(){
         StringBuilder code = new StringBuilder();

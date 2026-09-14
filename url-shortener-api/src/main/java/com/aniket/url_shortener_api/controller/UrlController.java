@@ -2,11 +2,13 @@ package com.aniket.url_shortener_api.controller;
 
 import com.aniket.url_shortener_api.Url;
 import com.aniket.url_shortener_api.dto.CreateUrlRequest;
+import com.aniket.url_shortener_api.dto.UrlResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.aniket.url_shortener_api.service.UrlService;
 import java.net.URI;
+
 
 
 @RestController
@@ -36,8 +38,10 @@ public class UrlController {
     }
 
     @GetMapping("/{shortcode}/stats")
-    public ResponseEntity<Url> getUrlStats(@PathVariable String shortcode) {
+    public ResponseEntity<UrlResponse> getUrlStats(@PathVariable String shortcode) {
         Url url = urlservice.getUrlStats(shortcode);
-        return ResponseEntity.ok(url);
+        UrlResponse response = urlservice.convertToResponse(url);
+
+        return ResponseEntity.ok(response);
     }
 }
