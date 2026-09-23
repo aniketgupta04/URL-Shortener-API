@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.aniket.url_shortener_api.service.UrlService;
 import java.net.URI;
-
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -22,7 +22,7 @@ public class UrlController {
     }
 
     @PostMapping
-    public Url createurl(@RequestBody CreateUrlRequest request){
+    public Url createurl(@Valid @RequestBody CreateUrlRequest request){
         return urlservice.createUrl(request.getLongUrl());
     }
 
